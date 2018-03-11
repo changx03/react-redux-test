@@ -28,6 +28,20 @@ class Counter extends Component {
             this.props.onSub(5);
           }}
         />
+        <hr />
+        <button onClick={this.props.onStoreResult}>Store Result</button>
+        <ul>
+          {this.props.storedResults.map(item => (
+            <li
+              key={item.id}
+              onClick={() => {
+                this.props.onDeleteResult(item.id);
+              }}
+            >
+              {item.value}
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
@@ -35,6 +49,7 @@ class Counter extends Component {
 
 const mapStateToProps = state => ({
   ctr: state.counter,
+  storedResults: state.results,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -42,6 +57,8 @@ const mapDispatchToProps = dispatch => ({
   onDecrementCounter: () => dispatch({ type: 'DECREMENT' }),
   onAdd: value => dispatch({ type: 'ADD', value }),
   onSub: value => dispatch({ type: 'SUB', value }),
+  onStoreResult: () => dispatch({ type: 'STORE_RESULT' }),
+  onDeleteResult: id => dispatch({ type: 'DELETE_RESULT', id }),
 });
 
 // function createConnect(...) {
